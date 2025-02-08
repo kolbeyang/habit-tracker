@@ -1,0 +1,68 @@
+{
+  "title": "Dynamic Keyboard Layout",
+  "description": "Switch to dvorak if internal keyboard is being used, otherwise use US.",
+  "manipulators": [
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "left_command"
+      },
+      "to": [
+        {
+          "select_input_source": {
+            "input_source_id": "com.apple.keylayout.US"
+          }
+        }
+      ],
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [
+            {
+              "input_source_id": "com.apple.keylayout.Dvorak"
+            }
+          ]
+        },
+        {
+          "type": "device_if",
+          "identifiers": [
+            {
+              "is_built_in_keyboard": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "left_command"
+      },
+      "to": [
+        {
+          "select_input_source": {
+            "input_source_id": "com.apple.keylayout.Dvorak"
+          }
+        }
+      ],
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [
+            {
+              "input_source_id": "com.apple.keylayout.US"
+            }
+          ]
+        },
+        {
+          "type": "device_if",
+          "identifiers": [
+            {
+              "is_built_in_keyboard": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
