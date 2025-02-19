@@ -23,11 +23,23 @@ const initialState: HabitState = {
   habitCompletionsError: null,
 };
 
-export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
+export const fetchHabits = createAsyncThunk("habits/fetch", async () => {
   const { data, error } = await supabaseClient.from("habits").select("*");
   if (error) throw new Error(error.message);
   return data;
 });
+
+export const fetchHabitCompletions = createAsyncThunk(
+  "habit-completions/fetch",
+  async ({ start, end }: { start: string; end?: string }) => {
+    const { data, error } = await supabaseClient
+      .from("habit_completions")
+      .select("*")
+      .gte("date", start)
+      .lte("date", end ?? start);
+    return data;
+  },
+);
 
 export const createHabit = createAsyncThunk(
   "habits/create",
@@ -121,6 +133,19 @@ const habitSlice = createSlice({
         state.isHabitsLoading = false;
         state.habitsError = action.error.message ?? "Error fetching habits ";
       })
+      .addCase(fetchHabitCompletions.pending, (state) => {
+        state.isHabitCompletionsLoading = true;
+        state.habitCompletionsError = null;
+      })
+      .addCase(fetchHabitCompletions.fulfilled, (state, action) => {
+        state.isHabitCompletionsLoading = false;
+        state.habitCompletions = action.payload;
+      })
+      .addCase(fetchHabitCompletions.rejected, (state, action) => {
+        state.isHabitCompletionsLoading = false;
+        state.habitCompletionsError =
+          action.error.message ?? "Error fetching habit completions ";
+      })
       .addCase(createHabit.fulfilled, (state, action) => {
         const newHabit = action.payload;
         const newHabits = [...state.habits, newHabit];
@@ -146,7 +171,7 @@ const habitSlice = createSlice({
           ...state.habitCompletions,
           newHabitCompletion,
         ];
-        return { ...state, newHabitCompletions: newHabitCompletions };
+        return { ...state, habitCompletions: newHabitCompletions };
       })
       .addCase(deleteHabitCompletion.fulfilled, (state, action) => {
         const deletedHabitCompletionId = action.payload;
@@ -167,5 +192,13 @@ export const selectHabitById =
 
 export const selectHabitCompletions = (state: { habits: HabitState }) =>
   state.habits.habitCompletions;
+
+export const selectHabitCompletion =
+  (habitId: string, date: string) => (state: { habits: HabitState }) => {
+    return state.habits.habitCompletions.find(
+      ({ habit_id: checkId, date: checkDate }) =>
+        checkId === habitId && checkDate === date,
+    );
+  };
 
 export const habitActions = habitSlice.reducer;

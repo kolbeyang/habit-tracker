@@ -1,4 +1,4 @@
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { supabaseClient } from "@/lib/supabase/client";
 import { Provider } from "@supabase/supabase-js";
@@ -15,7 +15,6 @@ const useLogin = () => {
     if (error) {
       router.push("/error");
     }
-    router.push("/today");
   };
 
   const logout = async () => {

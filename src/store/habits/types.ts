@@ -7,6 +7,7 @@ export interface Habit {
   is_archived: boolean;
   icon: HabitIconName;
   user_id: string;
+  created_at: string;
 }
 
 export interface HabitCompletion {

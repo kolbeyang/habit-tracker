@@ -1,24 +1,28 @@
 "use client";
 
 import useLogin from "@/hooks/useLogin";
-import { useUser } from "@/hooks/useUser";
 import {
   deleteHabit,
+  fetchHabitCompletions,
   fetchHabits,
   selectHabitCompletions,
   selectHabits,
+  toggleHabitCompletion,
 } from "@/store/habits/module";
 import { AppDispatch } from "@/store/store";
-import { IconDots } from "@tabler/icons-react";
+import { formatDate } from "@/utils/date";
 import { isNil } from "lodash";
+import { DateTime } from "luxon";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ActionBar from "./ActionBar";
-import { ActionBarAction } from "./ActionBar/types";
+import NavBar from "../shared/NavBar";
+import { PageName } from "../shared/types";
 import HabitButton from "./HabitButton";
 import PageContext, { defaultPageState } from "./context";
 import { PageMode } from "./types";
+import { ActionBarAction } from "./TodayActionBar/types";
+import TodayActionBar from "./TodayActionBar";
 
 const Today = () => {
   const habits = useSelector(selectHabits);
@@ -27,14 +31,18 @@ const Today = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [pageState, setPageState] = useState(defaultPageState);
   const { logout } = useLogin();
-  const { user } = useUser();
 
-  useEffect(() => {
-    console.log("user is", user);
-  }, [user]);
+  const sortedHabits = useMemo(() => {
+    return [...habits].sort(
+      (a, b) =>
+        DateTime.fromISO(a.created_at).toMillis() -
+        DateTime.fromISO(b.created_at).toMillis(),
+    );
+  }, [habits]);
 
   useEffect(() => {
     dispatch(fetchHabits());
+    dispatch(fetchHabitCompletions({ start: formatDate(DateTime.now()) }));
   }, [dispatch]);
 
   const { mode } = pageState;
@@ -60,23 +68,25 @@ const Today = () => {
         dispatch(deleteHabit(habitId));
         break;
       default:
-        // TODO toggle habit completion
-        //dispatch(toggleHabitCompletion(habitId));
-        console.log("toggling habit completion");
+        dispatch(
+          toggleHabitCompletion({
+            habit_id: habitId,
+            date: formatDate(DateTime.now()),
+          }),
+        );
     }
   };
 
   return (
     <PageContext.Provider value={{ ...pageState, setState: setPageState }}>
-      <div className="flex flex-col size-full justify-between">
-        <div className="flex flex-col pb-[4px] overflow-y-auto">
-          <div className="flex justify-between w-full pt-[48px] pb-[8px] px-[36px]">
+      <div className="flex flex-col size-full max-w-[540px] lg:max-w-[640px] relative">
+        <div className="flex flex-col pb-[4px] overflow-y-auto pb-[84px] scrollbar-hide">
+          <div className="flex justify-between w-full pt-[48px] pb-[8px] px-[36px] items-center transition-all sm:px-0">
             <h1 className="text-[36px] font-extrabold">TODAY</h1>
-            {/* TODO: replace with an actual sign out button*/}
-            <IconDots size={48} className="text-text" onClick={logout} />
+            <NavBar pageName={PageName.Today} />
           </div>
-          <div className="grid grid-cols-3 gap-[2px] justify-items-center">
-            {habits.map((habit) => (
+          <div className="grid grid-cols-3 lg:grid-cols-4 gap-[2px] justify-items-center">
+            {sortedHabits.map((habit) => (
               <HabitButton
                 key={habit.id}
                 habit={habit}
@@ -86,7 +96,8 @@ const Today = () => {
             ))}
           </div>
         </div>
-        <ActionBar
+        <TodayActionBar
+          className="absolute bottom-[4px]"
           isActiveMap={{
             [ActionBarAction.Create]: false,
             [ActionBarAction.Edit]: mode === PageMode.Edit,

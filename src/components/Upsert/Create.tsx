@@ -14,6 +14,7 @@ const defaultHabit: Habit = {
   is_archived: false,
   icon: "list",
   user_id: "",
+  created_at: "",
 };
 
 const Create = () => {

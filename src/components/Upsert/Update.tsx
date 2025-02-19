@@ -6,13 +6,14 @@ import { isNil } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import Upsert from ".";
 import { useRouter } from "next/navigation";
+import { AppDispatch } from "@/store/store";
 
 interface Props {
   habitId: string | undefined;
 }
 
 const Update = ({ habitId }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const habit = useSelector(
     habitId ? selectHabitById(habitId) : () => undefined,

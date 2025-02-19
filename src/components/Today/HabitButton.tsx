@@ -4,6 +4,7 @@ import { useCallback, useContext } from "react";
 import { Habit } from "@/store/habits/types";
 import PageContext from "./context";
 import { PageMode } from "./types";
+import { HabitIconName } from "@/types/habitIcon";
 
 interface Props {
   habit: Habit;
@@ -21,7 +22,7 @@ const HabitButton = ({
   const { mode } = useContext(PageContext);
   const { name, icon } = habit;
 
-  const getIconName = useCallback(() => {
+  const getIconName = useCallback((): HabitIconName => {
     if (mode === PageMode.Edit) return "pencil";
     if (mode === PageMode.Stats) return "stats";
     if (mode === PageMode.Delete) return "trash";
@@ -37,9 +38,6 @@ const HabitButton = ({
           : "text-subtle-06",
         {
           "": mode === PageMode.Delete,
-          //"bg-subtle-03 text-text": [PageMode.Stats, PageMode.Edit].includes(
-          //  mode,
-          //),
         },
         className,
       )}

@@ -6,7 +6,7 @@ interface Props extends IconProps {
 }
 
 const HabitIcon = ({ name, ...rest }: Props) => {
-  const Component = HabitIconMap[name];
+  const Component = HabitIconMap[name] ?? HabitIconMap.questionMark;
   return <Component {...rest} />;
 };
 

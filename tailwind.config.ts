@@ -11,6 +11,9 @@ export default {
   theme: {
     extend: {
       colors,
+      fontFamily: {
+        workSans: ["var(--font-work-sans)", "sans-serif"],
+      },
     },
   },
   plugins: [scrollbarHide],
