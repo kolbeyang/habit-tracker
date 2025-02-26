@@ -21,7 +21,7 @@ const FriendCard = ({}: Props) => {
 
   return (
     <div
-      className="flex rounded-[14px] text-primary-06 flex-col font-bold overflow-hidden divide-y-2 divide-base"
+      className="flex-1 flex rounded-[14px] text-primary-06 flex-col font-bold overflow-hidden divide-y-2 divide-base"
       style={{
         color: getGradientTextColor(testPercentages[0]),
         backgroundColor: getGradientBackgroundColor(testPercentages[0]),

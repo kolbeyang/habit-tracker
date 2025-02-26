@@ -1,11 +1,11 @@
 "use client";
 
-import { IconMenu2 } from "@tabler/icons-react";
+import useLogin from "@/hooks/useLogin";
+import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import PageButton from "./PageButton";
 import { PageName } from "./types";
-import useLogin from "@/hooks/useLogin";
 
 interface Props {
   pageName: PageName;
@@ -44,7 +44,7 @@ const NavBar = ({ pageName }: Props) => {
           onClick={logout}
           isIcon
         >
-          <IconMenu2 size={24} />
+          <IconLogout className="text-subtle-05" size={24} />
         </Button>
       </div>
     </div>

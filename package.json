@@ -16,6 +16,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "@tabler/icons-react": "^3.30.0",
+    "@tailwindcss/vite": "^4.0.8",
     "@types/chroma-js": "^2.4.5",
     "@types/lodash": "^4.17.13",
     "@types/luxon": "^3.4.2",
@@ -29,6 +30,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
+    "tailwind": "^4.0.0",
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar-hide": "^2.0.0"
   },
