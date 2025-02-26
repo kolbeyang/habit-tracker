@@ -1,7 +1,6 @@
 import {
   IconAppleFilled,
   IconArchive,
-  IconBarbell,
   IconBarbellFilled,
   IconBedFilled,
   IconBellRinging,
@@ -44,6 +43,7 @@ import {
   IconHistory,
   IconLanguage,
   IconLeaf,
+  IconList,
   IconListCheck,
   IconLungs,
   IconMail,
@@ -200,6 +200,7 @@ export const HabitIconMap = {
   history: IconHistory,
 
   questionMark: IconQuestionMark,
+  list: IconList,
 };
 
 export type HabitIconName = keyof typeof HabitIconMap;

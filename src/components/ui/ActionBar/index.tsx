@@ -5,7 +5,7 @@ import { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react";
 
 interface Props {
   className?: string;
-  helperText?: boolean;
+  helperText?: string;
   isActive?: boolean;
   helperIconComponent?: ForwardRefExoticComponent<
     IconProps & RefAttributes<Icon>

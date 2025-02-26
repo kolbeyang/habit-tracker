@@ -1,7 +1,6 @@
 import Button from "@/components/ui/Button";
 import { cn } from "@/utils/classNameMerge";
 import { Icon, IconProps } from "@tabler/icons-react";
-import { capitalize } from "lodash";
 import {
   ForwardRefExoticComponent,
   HTMLAttributes,

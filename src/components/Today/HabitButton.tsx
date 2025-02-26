@@ -24,7 +24,7 @@ const HabitButton = ({
 
   const getIconName = useCallback((): HabitIconName => {
     if (mode === PageMode.Edit) return "pencil";
-    if (mode === PageMode.Stats) return "stats";
+    if (mode === PageMode.Stats) return "chartArea";
     if (mode === PageMode.Delete) return "trash";
     return isChecked ? "check" : icon;
   }, [icon, isChecked, mode]);

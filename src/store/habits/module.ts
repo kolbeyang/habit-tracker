@@ -1,10 +1,8 @@
-// store/habitSlice.ts
 import { supabaseClient } from "@/lib/supabase/client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Habit, HabitCompletion } from "./types";
 
-// Define the initial state for habits
 interface HabitState {
   habits: Habit[];
   isHabitsLoading: boolean;
@@ -37,6 +35,7 @@ export const fetchHabitCompletions = createAsyncThunk(
       .select("*")
       .gte("date", start)
       .lte("date", end ?? start);
+    if (error) throw new Error(error.message);
     return data;
   },
 );

@@ -1,6 +1,5 @@
 "use client";
 
-import useLogin from "@/hooks/useLogin";
 import {
   deleteHabit,
   fetchHabitCompletions,
@@ -17,12 +16,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../shared/NavBar";
-import { PageName } from "../shared/types";
 import HabitButton from "./HabitButton";
+import TodayActionBar from "./TodayActionBar";
+import { ActionBarAction } from "./TodayActionBar/types";
 import PageContext, { defaultPageState } from "./context";
 import { PageMode } from "./types";
-import { ActionBarAction } from "./TodayActionBar/types";
-import TodayActionBar from "./TodayActionBar";
 
 const Today = () => {
   const habits = useSelector(selectHabits);
@@ -30,7 +28,6 @@ const Today = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [pageState, setPageState] = useState(defaultPageState);
-  const { logout } = useLogin();
 
   const sortedHabits = useMemo(() => {
     return [...habits].sort(
@@ -83,7 +80,7 @@ const Today = () => {
         <div className="flex flex-col pb-[4px] overflow-y-auto pb-[84px] scrollbar-hide">
           <div className="flex justify-between w-full pt-[48px] pb-[8px] px-[36px] items-center transition-all sm:px-0">
             <h1 className="text-[36px] font-extrabold">TODAY</h1>
-            <NavBar pageName={PageName.Today} />
+            <NavBar />
           </div>
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-[2px] justify-items-center">
             {sortedHabits.map((habit) => (

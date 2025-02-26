@@ -7,34 +7,30 @@ import Button from "../ui/Button";
 import PageButton from "./PageButton";
 import { PageName } from "./types";
 
-interface Props {
-  pageName: PageName;
-}
+//interface Props {
+//  pageName: PageName;
+//}
 
-const NavBar = ({ pageName }: Props) => {
+const NavBar = () => {
   const router = useRouter();
   const { logout } = useLogin();
   return (
     <div className="-outline-offset-2 flex items-center justify-center outline outline-2 outline-subtle-03/50 rounded-[12px] overflow-hidden h-fit">
       <div className="flex">
-        {pageName !== PageName.Today && (
-          <PageButton
-            pageName={PageName.Today}
-            onClick={() => router.push("/today")}
-          />
-        )}
-        {pageName !== PageName.Week && (
-          <PageButton
-            pageName={PageName.Week}
-            onClick={() => router.push("/week")}
-          />
-        )}
-        {pageName !== PageName.Friends && (
-          <PageButton
-            pageName={PageName.Friends}
-            onClick={() => router.push("/friends")}
-          />
-        )}
+        <PageButton
+          pageName={PageName.Today}
+          onClick={() => router.push("/today")}
+        />
+        <PageButton
+          pageName={PageName.Week}
+          onClick={() => router.push("/week")}
+        />
+        {/*
+        <PageButton
+          pageName={PageName.Friends}
+          onClick={() => router.push("/friends")}
+        />
+        */}
       </div>
       <div>
         <Button

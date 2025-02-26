@@ -11,7 +11,6 @@ import { DateTime } from "luxon";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../shared/NavBar";
-import { PageName } from "../shared/types";
 import CheckboxTable from "./CheckboxTable";
 import IconColumn from "./IconColumn";
 
@@ -42,7 +41,7 @@ const Week = () => {
     <div className="flex-1 flex flex-col w-full overflow-hidden max-w-[540px] lg:max-w-[840px] transition-all duration-500">
       <div className="flex justify-between w-full pt-[48px] pb-[8px] px-[36px] transition-all sm:px-0 items-center">
         <h1 className="text-[36px] font-extrabold">WEEK</h1>
-        <NavBar pageName={PageName.Week} />
+        <NavBar />
       </div>
       <div className="flex-1 overflow-y-scroll scrollbar-hide -outline-offset-2 outline outline-2 outline-subtle-03/50 rounded-[14px]">
         <div className="flex items-end divide-x-2 ">

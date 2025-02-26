@@ -20,7 +20,7 @@ const iconMap = {
 };
 
 const helperText = {
-  [PageMode.Normal]: "Click on a habit",
+  [PageMode.Normal]: undefined,
   [PageMode.Edit]: "Click on a habit to edit",
   [PageMode.Delete]: "Click on a habit to delete",
   [PageMode.Stats]: "Click on a habit to see stats",
@@ -36,7 +36,11 @@ const TodayActionBar = ({ className, onClickMap, isActiveMap }: Props) => {
   const { mode } = useContext(PageContext);
 
   return (
-    <ActionBar className={className} isActive={mode !== PageMode.Normal}>
+    <ActionBar
+      className={className}
+      isActive={mode !== PageMode.Normal}
+      helperText={helperText[mode]}
+    >
       {(values(ActionBarAction) as ActionBarAction[]).map((action) => (
         <ActionBarButton
           isActive={isActiveMap[action]}
