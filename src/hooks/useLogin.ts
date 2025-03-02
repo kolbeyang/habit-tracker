@@ -16,7 +16,7 @@ const useLogin = () => {
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${redirectBase}${process.env.NEXT_PUBLIC_BASE_PATH}/auth/callback`,
+        redirectTo: `${redirectBase}/auth/callback`,
       },
     });
     // TODO: replace with toast
