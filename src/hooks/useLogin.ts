@@ -3,6 +3,11 @@ import { useRouter } from "next/navigation";
 import { supabaseClient } from "@/lib/supabase/client";
 import { Provider } from "@supabase/supabase-js";
 
+const redirectBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000" // Development URL
+    : "https://www.kolbeyang.com"; // Production URL
+
 const useLogin = () => {
   const router = useRouter();
 
@@ -10,6 +15,9 @@ const useLogin = () => {
     // const { data, error } = await supabaseClient.auth.signInWithOAuth({
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider,
+      options: {
+        redirectTo: `${redirectBase}${process.env.NEXT_PUBLIC_BASE_PATH}/auth/callback`,
+      },
     });
     // TODO: replace with toast
     if (error) {

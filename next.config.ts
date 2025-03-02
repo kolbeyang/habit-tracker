@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: "/habits",
-  assetPrefix: "/habits",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/habits" : "",
   images: {
     unoptimized: true,
   },
