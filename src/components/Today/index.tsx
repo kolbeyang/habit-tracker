@@ -10,7 +10,7 @@ import {
 } from "@/store/habits/module";
 import { AppDispatch } from "@/store/store";
 import { formatDate } from "@/utils/date";
-import { isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { DateTime } from "luxon";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -21,6 +21,7 @@ import TodayActionBar from "./TodayActionBar";
 import { ActionBarAction } from "./TodayActionBar/types";
 import PageContext, { defaultPageState } from "./context";
 import { PageMode } from "./types";
+import NoHabits from "./NoHabits";
 
 const Today = () => {
   const habits = useSelector(selectHabits);
@@ -82,23 +83,27 @@ const Today = () => {
             <h1 className="text-[36px] font-extrabold">TODAY</h1>
             <NavBar />
           </div>
-          <div className="grid grid-cols-3 lg:grid-cols-4 gap-[2px] justify-items-center">
-            {sortedHabits.map((habit) => (
-              <HabitButton
-                key={habit.id}
-                habit={habit}
-                isChecked={!isNil(getHabitCompletion(habit.id))}
-                onClick={() => onHabitButtonClick(habit.id)}
-              />
-            ))}
-          </div>
+          {isEmpty(sortedHabits) ? (
+            <NoHabits />
+          ) : (
+            <div className="grid grid-cols-3 lg:grid-cols-4 gap-[2px] justify-items-center">
+              {sortedHabits.map((habit) => (
+                <HabitButton
+                  key={habit.id}
+                  habit={habit}
+                  isChecked={!isNil(getHabitCompletion(habit.id))}
+                  onClick={() => onHabitButtonClick(habit.id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <TodayActionBar
           className="absolute bottom-[4px]"
           isActiveMap={{
             [ActionBarAction.Create]: false,
             [ActionBarAction.Edit]: mode === PageMode.Edit,
-            [ActionBarAction.Stats]: mode === PageMode.Stats,
+            //[ActionBarAction.Stats]: mode === PageMode.Stats,
             [ActionBarAction.Delete]: mode === PageMode.Delete,
           }}
           onClickMap={{
@@ -107,10 +112,10 @@ const Today = () => {
               if (mode !== PageMode.Edit) setMode(PageMode.Edit);
               else setMode(PageMode.Normal);
             },
-            [ActionBarAction.Stats]: () => {
-              if (mode !== PageMode.Stats) setMode(PageMode.Stats);
-              else setMode(PageMode.Normal);
-            },
+            //[ActionBarAction.Stats]: () => {
+            //  if (mode !== PageMode.Stats) setMode(PageMode.Stats);
+            //  else setMode(PageMode.Normal);
+            //},
             [ActionBarAction.Delete]: () => {
               if (mode !== PageMode.Delete) setMode(PageMode.Delete);
               else setMode(PageMode.Normal);

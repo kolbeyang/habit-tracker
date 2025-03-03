@@ -2,6 +2,7 @@ import { supabaseClient } from "@/lib/supabase/client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Habit, HabitCompletion } from "./types";
+import { unionBy } from "lodash";
 
 interface HabitState {
   habits: Habit[];
@@ -126,7 +127,7 @@ const habitSlice = createSlice({
       })
       .addCase(fetchHabits.fulfilled, (state, action) => {
         state.isHabitsLoading = false;
-        state.habits = action.payload;
+        state.habits = unionBy(action.payload, state.habits, "id");
       })
       .addCase(fetchHabits.rejected, (state, action) => {
         state.isHabitsLoading = false;
@@ -138,7 +139,11 @@ const habitSlice = createSlice({
       })
       .addCase(fetchHabitCompletions.fulfilled, (state, action) => {
         state.isHabitCompletionsLoading = false;
-        state.habitCompletions = action.payload;
+        state.habitCompletions = unionBy(
+          action.payload,
+          state.habitCompletions,
+          "id",
+        );
       })
       .addCase(fetchHabitCompletions.rejected, (state, action) => {
         state.isHabitCompletionsLoading = false;

@@ -8,7 +8,7 @@ import {
 import { AppDispatch } from "@/store/store";
 import { formatDate } from "@/utils/date";
 import { DateTime } from "luxon";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../shared/NavBar";
 import CheckboxTable from "./CheckboxTable";
@@ -20,6 +20,14 @@ const Week = () => {
   const habits = useSelector(selectHabits);
   const dispatch = useDispatch<AppDispatch>();
   const scrollRightIntoViewRef = useRef<HTMLDivElement>(null);
+
+  const sortedHabits = useMemo(() => {
+    return [...habits].sort(
+      (a, b) =>
+        DateTime.fromISO(a.created_at).toMillis() -
+        DateTime.fromISO(b.created_at).toMillis(),
+    );
+  }, [habits]);
 
   useEffect(() => {
     dispatch(fetchHabits());
@@ -48,7 +56,7 @@ const Week = () => {
           <div className="flex-1 scrollbar-hide overflow-x-scroll border-r-2 border-r-subtle-03/50">
             <div className="min-w-fit overflow-hidden pl-[4px] gap-[4px] py-[4px] flex">
               <CheckboxTable
-                habits={habits}
+                habits={sortedHabits}
                 className="gap-[2px]"
                 rowClassName="gap-[2px]"
                 cellClassName={cellSizeClassName}
@@ -59,7 +67,7 @@ const Week = () => {
           </div>
           <div className="p-[4px]">
             <IconColumn
-              habits={habits}
+              habits={sortedHabits}
               className="gap-[2px]"
               cellClassName={cellSizeClassName}
             />

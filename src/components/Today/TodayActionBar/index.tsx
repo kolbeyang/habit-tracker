@@ -1,19 +1,14 @@
 import ActionBar from "@/components/ui/ActionBar";
-import {
-  IconChartAreaFilled,
-  IconPencil,
-  IconPlus,
-  IconTrash,
-} from "@tabler/icons-react";
+import ActionBarButton from "@/components/ui/ActionBar/ActionBarButton";
+import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { capitalize, values } from "lodash";
 import { useContext } from "react";
 import PageContext from "../context";
 import { PageMode } from "../types";
 import { ActionBarAction } from "./types";
-import ActionBarButton from "@/components/ui/ActionBar/ActionBarButton";
 
 const iconMap = {
-  [ActionBarAction.Stats]: IconChartAreaFilled,
+  //[ActionBarAction.Stats]: IconChartAreaFilled,
   [ActionBarAction.Create]: IconPlus,
   [ActionBarAction.Edit]: IconPencil,
   [ActionBarAction.Delete]: IconTrash,
